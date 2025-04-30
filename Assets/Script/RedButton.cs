@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractionButton : MonoBehaviour
+public class RedButton : MonoBehaviour
 {
     private bool isPlayerInRange = false;
 
@@ -45,11 +45,19 @@ public class InteractionButton : MonoBehaviour
 
     void Interact()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         if (upSprite != null)
         {
             upSprite.SetActive(false); // Up 오브젝트 비활성
             StartCoroutine(ButtonDelay(1)); // false 후, n초 뒤에 true로 자동 활성
+            
             // 뉴머레이터 같은 변수는 스타트 코룬틴으로 호출해야 작동한다고 함
+        }
+        if (player != null)
+        {
+            player.transform.position = new Vector3(0f, 0f, player.transform.position.z);  // 플레이어 0, 0으로 이동
+            // Vector2로 x,y 값만 0으로 해도 되지만, z축을 사용하는 카메라등의 문제가 생길 수 있어 해주는게 좋다고 함.
         }
 
         // 미니게임 기능을 어떻게 추가하지?
