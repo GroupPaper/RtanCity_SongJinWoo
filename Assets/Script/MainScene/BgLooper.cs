@@ -27,20 +27,12 @@ public class BgLooper : MonoBehaviour
 
         if (collision.CompareTag("BackGround"))
         {
-            Debug.Log("Background detected!");
-
-            float widthOfBgObject = collision.GetComponent<SpriteRenderer>().bounds.size.x;
+            float widthOfBgObject = 88.5f;
             Vector3 pos = collision.transform.position;
 
-            pos.x += widthOfBgObject * numBgCount;
-            collision.transform.localPosition = new Vector3(pos.x, collision.transform.localPosition.y, 0);
-
-            Debug.Log($"Moved {collision.name} to new position: {pos}");
+            pos.x += widthOfBgObject;
+            collision.transform.position = pos;
             return;
-        }
-        else
-        {
-            Debug.Log("Not a background. Tag: " + collision.tag);
         }
 
         Obstacle obstacle = collision.GetComponent<Obstacle>();
@@ -49,5 +41,4 @@ public class BgLooper : MonoBehaviour
             obstacleLastPosition = obstacle.SetRandomPlace(obstacleLastPosition, obestacleCount);
         }
     }
-
 }
