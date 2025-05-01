@@ -7,11 +7,11 @@ public class MiniGameController : MonoBehaviour
     public Animator pa;
     public Rigidbody2D prb;
 
-    float jumpPower = 5f;
-    float moveSpeed = 5f;
+    public float jumpPower = 6f;
+    public float moveSpeed = 3f;
     float deadDelay = 0;
 
-    bool isjump;
+    bool isjump = false;
 
     public bool isDead;
 
@@ -19,11 +19,18 @@ public class MiniGameController : MonoBehaviour
     {
         if (isDead)
         {
-
+            if(deadDelay <= 0)
+            {
+                //게임 재시작
+            }
+            else
+            {
+                deadDelay -= Time.deltaTime;
+            }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space)|Input.GetMouseButtonDown(0))
             {
                 isjump = true;
             }
@@ -32,7 +39,10 @@ public class MiniGameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDead) { return; }
+        if (isDead)
+        {
+            return;
+        }
 
         Vector3 velocity = prb.velocity;
         velocity.x = moveSpeed;
@@ -45,7 +55,20 @@ public class MiniGameController : MonoBehaviour
 
         prb.velocity = velocity;
 
-        float angle = Mathf.Clamp((prb.velocity.y * 10), -90, 90);
-        transform.
+        float angle = Mathf.Clamp((prb.velocity.y * 10f), -90, 90);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+        deadDelay = 1f;
+
+        pa.SetTrigger("Dead");
     }
 }
