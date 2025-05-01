@@ -21,7 +21,7 @@ public class MiniGameController : MonoBehaviour
         {
             if(deadDelay <= 0)
             {
-                //게임 재시작
+                //게임 재시작, 기본 공간으로 바뀌는 기능 추가예정
             }
             else
             {
@@ -55,8 +55,10 @@ public class MiniGameController : MonoBehaviour
 
         prb.velocity = velocity;
 
-        float angle = Mathf.Clamp((prb.velocity.y * 10f), -90, 90);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        float angle = Mathf.Clamp((prb.velocity.y * 10f), -90f, 90f);
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.fixedDeltaTime * 5f);
+        // 강의에서 제공하는 방법으로 하면 회전이 확확 돌아서, 부드럽게 회전하는 방법을 찾던 중 정해진 값으로 정해진 시간만큼 값을 변환하는 방법을 찾음
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
