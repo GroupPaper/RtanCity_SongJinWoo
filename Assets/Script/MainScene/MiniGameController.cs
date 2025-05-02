@@ -13,7 +13,12 @@ public class MiniGameController : MonoBehaviour
 
     bool isjump = false;
 
-    public bool isDead;
+    public static bool isDead;
+
+    private void Start()
+    {
+
+    }
 
     private void Update()
     {
@@ -21,8 +26,12 @@ public class MiniGameController : MonoBehaviour
         {
             if(deadDelay <= 0)
             {
-                //게임 재시작, 기본 공간으로 바뀌는 기능 추가예정
+                if(isDead == true)
+                {
+                    MiniGameManager.Instance.GameOver();
+                }
             }
+
             else
             {
                 deadDelay -= Time.deltaTime;
@@ -30,7 +39,7 @@ public class MiniGameController : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space)|Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 isjump = true;
             }
