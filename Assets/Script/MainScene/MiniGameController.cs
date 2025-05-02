@@ -22,6 +22,11 @@ public class MiniGameController : MonoBehaviour
 
     private void Update()
     {
+        if (!MiniGameManager.Instance.isStop)
+        {
+            return;
+        }
+
         if (isDead)
         {
             if(deadDelay <= 0)
@@ -48,6 +53,11 @@ public class MiniGameController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!MiniGameManager.Instance.isStop)
+        {
+            return;
+        }
+
         if (isDead)
         {
             return;

@@ -16,6 +16,7 @@ public class RedButton : MonoBehaviour
 
     public GameObject player;
     public GameObject miniplayer;
+
     public Rigidbody2D prb;
 
     private void Start()
@@ -69,7 +70,7 @@ public class RedButton : MonoBehaviour
 
             miniplayer.SetActive(true);
             minicamera.SetActive(true);
-
+            MiniGameManager.Instance.GameMenu();
         }
 
         // 여기에 회피하는 미니게임을 추가하는게 좋을듯?

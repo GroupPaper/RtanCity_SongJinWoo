@@ -13,7 +13,10 @@ public class MiniGameManager : MonoBehaviour
     public GameObject player;
     public GameObject miniplayer;
 
+    public GameObject gamemenu;
     public GameObject gameOver;
+
+    public Button startButton;
     public Button restartButton;
     public Button exitButton;
 
@@ -26,6 +29,12 @@ public class MiniGameManager : MonoBehaviour
     private List<Vector3> obstacleInitialPositions = new List<Vector3>();
 
     private int score = 0;
+    private int bestscore = 0;
+
+    public Text scoreText;
+    public Text bestScoreText;
+
+    public bool isStop;
 
     private void Awake()
     {
@@ -34,6 +43,8 @@ public class MiniGameManager : MonoBehaviour
 
     private void Start()
     {
+        bestscore = PlayerPrefs.GetInt("BestScore", 0);
+
         restartButton.onClick.AddListener(ReStartGame);
         exitButton.onClick.AddListener(ExitMiniGame);
 
@@ -54,14 +65,47 @@ public class MiniGameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (isStop)
+        {
+            scoreText.text = score.ToString();
+        }
+    }
+
+    public void GameMenu()
+    {
+        startButton.onClick.AddListener(GameStart);
+        gamemenu.SetActive(true);
+
+        isStop = false;
+        Time.timeScale = 0f; // 게임을 정지
+    }
+
+    public void GameStart()
+    {
+        gamemenu.SetActive(false);
+
+        isStop = true;
+        Time.timeScale = 1f; // 게임을 실행
+    }
+
     public void GameOver()
     {
         gameOver.SetActive(true);
+
+        if(score >= bestscore)
+        {
+            bestscore = score;
+            PlayerPrefs.SetInt("BestScore", bestscore); // 저장
+        }
+
+        bestScoreText.text = $"{bestscore}";
     }
 
     public void AddScore(int value)
     {
-        score = value;
+        score += value;
     }
 
     public void ReStartGame()
@@ -86,11 +130,15 @@ public class MiniGameManager : MonoBehaviour
             backgroundObjects[i].position = backgroundInitialPositions[i];
         }
 
-        // 장애물들을 원래 위치로 되돌리기
+        // 장애물들을 재배치
         for (int i = 0; i < obstacleObjects.Count; i++)
         {
-            obstacleObjects[i].transform.position = obstacleInitialPositions[i];
+            Vector3 newPosition = obstacleInitialPositions[i];
+            newPosition.x += 25f; // 재배치시 X 값을 더함
+            obstacleObjects[i].transform.position = newPosition;
         }
+
+        scoreText.text = "0";
     }
 
     public void ExitMiniGame()
@@ -102,5 +150,6 @@ public class MiniGameManager : MonoBehaviour
         maincamera.SetActive(true);
 
         gameOver.SetActive(false);
+        scoreText.text = "";
     }
 }
