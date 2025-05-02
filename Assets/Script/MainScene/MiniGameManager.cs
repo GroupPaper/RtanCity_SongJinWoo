@@ -33,6 +33,7 @@ public class MiniGameManager : MonoBehaviour
 
     public Text scoreText;
     public Text bestScoreText;
+    public Text currentscore;
 
     public bool isStop;
 
@@ -70,6 +71,7 @@ public class MiniGameManager : MonoBehaviour
         if (isStop)
         {
             scoreText.text = score.ToString();
+            currentscore.text = score.ToString();
         }
     }
 
@@ -139,6 +141,7 @@ public class MiniGameManager : MonoBehaviour
         }
 
         scoreText.text = "0";
+        currentscore.text = "0";
     }
 
     public void ExitMiniGame()
@@ -150,6 +153,8 @@ public class MiniGameManager : MonoBehaviour
         maincamera.SetActive(true);
 
         gameOver.SetActive(false);
+
         scoreText.text = "";
+        currentscore.text = "";
     }
 }
