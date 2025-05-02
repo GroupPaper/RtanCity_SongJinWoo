@@ -56,8 +56,8 @@ public class BlueButton : MonoBehaviour
         }
         if (player != null)
         {
-            player.transform.position = new Vector3(0f, 0f, player.transform.position.z);  // 플레이어 해당 값으로 이동
-            // Vector2로 x,y 값만 0으로 해도 되지만, z축을 사용하는 카메라등의 문제가 생길 수 있어 해주는게 좋다고 함.
+            player.transform.position = new Vector3(-10.5f, -5.45f, player.transform.position.z);  // 플레이어 해당 값으로 이동
+            // Vector2로 x,y 값만 바꿔도 되지만, z축을 사용하는 카메라등의 문제가 생길 수 있어 해주는게 좋다고 함.
         }
 
         // 여기에 간단한 전투게임을 추가하는게 좋을듯?
