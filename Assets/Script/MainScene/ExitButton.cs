@@ -17,7 +17,7 @@ public class ExitButton : MonoBehaviour
 #if UNITY_EDITOR // 에디터에서만 실행되는 조건
         UnityEditor.EditorApplication.isPlaying = false;
 
-#else // 에디터 아니면(빌드시)
+#else // 에디터 아니면(빌드시?)
         Application.Quit();
 
 
